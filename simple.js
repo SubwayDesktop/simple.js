@@ -1,3 +1,6 @@
+'use strict';
+
+
 function $(selector){
     return document.querySelector(selector);
 }
@@ -8,64 +11,55 @@ function $All(selector){
 }
 
 
-function assignGlobalObject(list){
-    var item;
-    for(item in list)
-	if(list.hasOwnProperty(item))
-	    window[item] = $(list[item]);
+function assignGlobalObjects(list){
+    for(let item of Object.getOwnPropertyNames(list))
+	window[item] = $(list[item]);
 }
 
 
 function create(type, properties, ignore_invalid){
     var element = document.createElement(type);
-    var I, i, children, style, dataset;
-    
-    if(properties){
-	if(properties["children"]){
-	    children = properties["children"];
-	    for(i=0; i<children.length; i++){
-		if(!children[i] && ignore_invalid)
-		    continue;
-		element.appendChild(children[i]);
-	    }
+
+    /* no property is set, return the new element without processing */
+    if(!properties)
+	return element;
+
+    /* assign array-like data structures */
+    if(properties.children){
+	for(let child of properties.children){
+	    if(!child && ignore_invalid)
+		continue;
+	    element.appendChild(child);
 	}
-	if(properties["classList"]){
-	    classList = properties["classList"];
-	    for(i=0; i<classList.length; i++){
-		if(!classList[i] && ignore_invalid)
-		    continue;
-		element.classList.add(classList[i]);
-	    }
-	}
-	if(properties["style"]){
-	    style = properties["style"];
-	    for(I in style){
-		if(style.hasOwnProperty(I)){
-		    if(!style[I] && ignore_invalid)
-			continue;
-		    element.style[I] = style[I];
-		}
-	    }
-	}
-	if(properties["dataset"]){
-	    dataset = properties["dataset"];
-	    for(I in dataset){
-		if(dataset.hasOwnProperty(I)){
-		    if(!dataset[I] && ignore_invalid)
-			continue;
-		    element.dataset[I] = dataset[I];
-		}
-	    }
-	}
-	for(I in properties){
-	    if(properties.hasOwnProperty(I) && I != "children" && I != "style"){
-		if(!properties[I] && ignore_invalid)
-		    continue;
-		element[I] = properties[I];
-	    }
-	}
+	delete properties.children;
     }
-    
+    if(properties.classList){
+	for(let className of properties.classList){
+	    if(!className && ignore_invalid)
+		continue;
+	    element.classList.add(className);
+	}
+	delete properties.classList;
+    }
+    /* assign objects */
+    ['style', 'dataset'].forEach(function(item){
+	if(properties[item]){
+	    for(let I of Object.getOwnPropertyNames(properties[item])){
+		if(!properties[item][I] && ignore_invalid)
+		    continue;
+		element[item][I] = properties[item][I];
+	    }
+	    delete properties[item];
+	}
+    });
+
+    /* assign other properties */
+    for(let I of Object.getOwnPropertyNames(properties)){
+	if(!properties[I] && ignore_invalid)
+	    continue;
+	element[I] = properties[I];
+    }
+
     return element;
 }
 
