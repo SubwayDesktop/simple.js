@@ -64,6 +64,29 @@ function create(type, properties, ignore_invalid){
 }
 
 
+function hide(element){
+    if(element.style.display == 'none')
+	return false;
+    if(element.style.display)
+	element.dataset.style_display = element.style.display;
+    element.style.display = 'none';
+    return true;
+}
+
+
+function show(element){
+    if(element.style.display != 'none')
+	return false;
+    if(element.dataset.style_display){
+	element.style.display = element.dataset.style_display;
+	delete element.dataset.style_display;
+    }else{
+	element.style.display = '';
+    }
+    return true;
+}
+
+
 function printf(args){
     var string = arguments[0];
     var i;
