@@ -78,7 +78,7 @@ function create(type, properties){
 
 
 function duplicate(node){
-    return document.importNode(node);
+    return document.importNode(node, true);
 }
 
 
