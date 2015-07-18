@@ -64,6 +64,11 @@ function create(type, properties){
 }
 
 
+function duplicate(node){
+    return document.importNode(node);
+}
+
+
 function hide(element){
     if(element.style.display == 'none')
 	return false;
