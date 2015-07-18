@@ -24,6 +24,19 @@ function create(type, properties){
     if(!properties)
 	return element;
 
+    /* shortcut for textContent */
+    if(typeof properties == 'string'){
+	element.textContent = properties;
+	return element;
+    }
+
+    /* shortcut for children */
+    if(Array.isArray(properties)){
+	let children = properties;
+	properties = {};
+	properties.children = children;
+    }
+
     /* assign array-like data structures */
     if(properties.children){
 	for(let child of properties.children){
