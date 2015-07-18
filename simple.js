@@ -17,7 +17,7 @@ function assignGlobalObjects(list){
 }
 
 
-function create(type, properties, ignore_invalid){
+function create(type, properties){
     var element = document.createElement(type);
 
     /* no property is set, return the new element without processing */
@@ -27,7 +27,7 @@ function create(type, properties, ignore_invalid){
     /* assign array-like data structures */
     if(properties.children){
 	for(let child of properties.children){
-	    if(!child && ignore_invalid)
+	    if(!child)
 		continue;
 	    element.appendChild(child);
 	}
@@ -35,7 +35,7 @@ function create(type, properties, ignore_invalid){
     }
     if(properties.classList){
 	for(let className of properties.classList){
-	    if(!className && ignore_invalid)
+	    if(!className)
 		continue;
 	    element.classList.add(className);
 	}
@@ -45,7 +45,7 @@ function create(type, properties, ignore_invalid){
     ['style', 'dataset'].forEach(function(item){
 	if(properties[item]){
 	    for(let I of Object.getOwnPropertyNames(properties[item])){
-		if(!properties[item][I] && ignore_invalid)
+		if(!properties[item][I])
 		    continue;
 		element[item][I] = properties[item][I];
 	    }
@@ -55,7 +55,7 @@ function create(type, properties, ignore_invalid){
 
     /* assign other properties */
     for(let I of Object.getOwnPropertyNames(properties)){
-	if(!properties[I] && ignore_invalid)
+	if(!properties[I])
 	    continue;
 	element[I] = properties[I];
     }
