@@ -107,8 +107,10 @@ function show(element){
 
 function printf(args){
     var string = arguments[0];
+    /* note that %n in the string must be in ascending order */
+    /* like 'Foo %1 Bar %2 %3' */
     var i;
-    for(i=1; i<arguments.length; i++){
+    for(i=arguments.length-1; i>0; i--){
 	string = string.replace('%'+i, arguments[i]);
     }
     return string;
