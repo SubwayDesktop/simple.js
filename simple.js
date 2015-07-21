@@ -12,7 +12,7 @@ function $All(selector){
 
 
 function assignGlobalObjects(list){
-    for(let item of Object.getOwnPropertyNames(list))
+    for(let item of Object.keys(list))
 	window[item] = $(list[item]);
 }
 
@@ -57,7 +57,7 @@ function create(type, properties){
     /* assign objects */
     ['style', 'dataset'].forEach(function(item){
 	if(properties[item]){
-	    for(let I of Object.getOwnPropertyNames(properties[item])){
+	    for(let I of Object.keys(properties[item])){
 		if(!properties[item][I])
 		    continue;
 		element[item][I] = properties[item][I];
@@ -67,7 +67,7 @@ function create(type, properties){
     });
 
     /* assign other properties */
-    for(let I of Object.getOwnPropertyNames(properties)){
+    for(let I of Object.keys(properties)){
 	if(!properties[I])
 	    continue;
 	element[I] = properties[I];
@@ -110,8 +110,7 @@ function printf(args){
     /* note that %n in the string must be in ascending order */
     /* like 'Foo %1 Bar %2 %3' */
     var i;
-    for(i=arguments.length-1; i>0; i--){
+    for(i=arguments.length-1; i>0; i--)
 	string = string.replace('%'+i, arguments[i]);
-    }
     return string;
 }
