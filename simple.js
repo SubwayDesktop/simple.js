@@ -17,6 +17,12 @@ function assignGlobalObjects(list){
 }
 
 
+function assignMethods(constructor, methods){
+    for(let I of Object.keys(methods))
+	constructor.prototype[I] = methods[I];
+}
+
+
 function create(type, properties){
     var element = document.createElement(type);
 
