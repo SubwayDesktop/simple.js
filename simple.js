@@ -23,17 +23,15 @@ function assignMethods(constructor, methods){
 }
 
 
-function create(type, properties){
-    var element = document.createElement(type);
-
-    /* no property is set, return the new element without processing */
+function elementAssign(element, properties){
+    /* no property is set, exit without processing */
     if(!properties)
-	return element;
+	return;
 
     /* shortcut for textContent */
     if(typeof properties == 'string'){
 	element.textContent = properties;
-	return element;
+	return;
     }
 
     /* shortcut for children */
@@ -78,13 +76,21 @@ function create(type, properties){
 	    continue;
 	element[I] = properties[I];
     }
+}
 
+
+function create(type, properties){
+    var element = document.createElement(type);
+    elementAssign(element, properties);
     return element;
 }
 
 
-function duplicate(node){
-    return document.importNode(node, true);
+function inst(template, data){
+    var instance = document.importNode(template, true).content;
+    for(let selector of Object.keys(data))
+	elementAssign(instance.querySelector(selector), data[selector]);
+    return instance;
 }
 
 
