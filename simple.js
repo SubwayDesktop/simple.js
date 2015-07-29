@@ -28,13 +28,13 @@ function elementAssign(element, properties){
     if(!properties)
 	return;
 
-    /* shortcut for textContent */
+    /* shorthand for textContent */
     if(typeof properties == 'string'){
 	element.textContent = properties;
 	return;
     }
 
-    /* shortcut for children */
+    /* shorthand for children */
     if(Array.isArray(properties)){
 	let children = properties;
 	properties = {};
