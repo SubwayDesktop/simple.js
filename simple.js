@@ -117,6 +117,26 @@ function show(element){
 }
 
 
+function* previousElementIterator(element){
+    while(element){
+	element = element.previousElementSibling;
+	/* yield if previous sibling element exists */
+	if(element)
+	    yield element;
+    }
+}
+
+
+function* nextElementIterator(element){
+    while(element){
+	element = element.nextElementSibling;
+	/* yield if next sibling element exists */
+	if(element)
+	    yield element;
+    }
+}
+
+
 function printf(args){
     var string = arguments[0];
     /* note that %n in the string must be in ascending order */
