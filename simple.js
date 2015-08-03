@@ -137,6 +137,12 @@ function* nextElementIterator(element){
 }
 
 
+function* nodeListIterator(node_list){
+    for(let i=0; i<node_list.length; i++)
+	yield node_list[i];
+}
+
+
 function printf(args){
     var string = arguments[0];
     /* note that %n in the string must be in ascending order */
