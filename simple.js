@@ -137,12 +137,6 @@ function* nextElementIterator(element){
 }
 
 
-function* nodeListIterator(node_list){
-    for(let i=0; i<node_list.length; i++)
-	yield node_list[i];
-}
-
-
 function printf(args){
     var string = arguments[0];
     /* note that %n in the string must be in ascending order */
@@ -151,4 +145,13 @@ function printf(args){
     for(i=arguments.length-1; i>0; i--)
 	string = string.replace('%'+i, arguments[i]);
     return string;
+}
+
+
+/* Polyfill */
+if(!NodeList.prototype[Symbol.iterator]){
+    NodeList.prototype[Symbol.iterator] = function* (){
+	for(let i=0; i<this.length; i++)
+	    yield this[i];
+    };
 }
