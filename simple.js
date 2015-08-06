@@ -117,6 +117,11 @@ function show(element){
 }
 
 
+function insertAfter(newNode, referenceNode){
+	referenceNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+
 function* previousElementIterator(element){
     while(element){
 	element = element.previousElementSibling;
