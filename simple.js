@@ -117,8 +117,13 @@ function show(element){
 }
 
 
+function insertBefore(newNode, referenceNode){
+    referenceNode.parentNode.insertBefore(newNode, referenceNode);
+}
+
+
 function insertAfter(newNode, referenceNode){
-	referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 
