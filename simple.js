@@ -147,6 +147,32 @@ function* nextElementIterator(element){
 }
 
 
+function fetchFormData(form){
+    var data = {};
+    var input_elements = form.querySelectorAll('input');
+    for(let I of input_elements){
+	if(!I.name)
+	    continue;
+	if(I.type == 'checkbox' || I.type == 'radio')
+	    data[I.name] = I.checked;
+	else
+	    data[I.name] = I.value;
+    }
+    return data;
+}
+
+
+function fillForm(form, data){
+    for(let I of Object.keys(data)){
+	let input = form.querySelector(printf('input[name="%1"]', I));
+	if(input.type == 'checkbox' || input.type == 'radio')
+	    input.checked = data[I];
+	else
+	    input.value = data[I];
+    }
+}
+
+
 function printf(args){
     var string = arguments[0];
     /* note that %n in the string must be in ascending order */
