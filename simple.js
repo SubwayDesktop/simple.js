@@ -184,6 +184,25 @@ function printf(args){
 }
 
 
+function clone(obj){
+    /* code from stackoverflow #122102, much faster than other methods
+     * modified for only cloning simple JSON-like object
+     */
+    if(obj === null || typeof(obj) !== 'object' || 'isActiveClone_' in obj)
+	return obj;
+
+    var temp = {};
+
+    for(let key of Object.keys(obj)){
+	obj['isActiveClone_'] = null;
+	temp[key] = clone(obj[key]);
+	delete obj['isActiveClone_'];
+    }
+
+    return temp;
+}
+
+
 /* Polyfill */
 if(!NodeList.prototype[Symbol.iterator]){
     NodeList.prototype[Symbol.iterator] = function* (){
