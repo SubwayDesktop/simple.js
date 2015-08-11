@@ -173,6 +173,18 @@ function fillForm(form, data){
 }
 
 
+function disableForm(form){
+    for(let I of form.querySelectorAll('input'))
+	I.disabled = true;
+}
+
+
+function enableForm(form){
+    for(let I of form.querySelectorAll('input'))
+	I.disabled = false;
+}
+
+
 function printf(args){
     var string = arguments[0];
     /* note that %n in the string must be in ascending order */
