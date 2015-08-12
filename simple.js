@@ -198,12 +198,17 @@ function printf(args){
 
 function clone(obj){
     /* code from stackoverflow #122102, much faster than other methods
-     * modified for only cloning simple JSON-like object
+     * modified for only cloning simple objects which only contain
+     * primitive, array and object inheriting Object directly
      */
+    var temp;
     if(obj === null || typeof(obj) !== 'object' || 'isActiveClone_' in obj)
 	return obj;
 
-    var temp = {};
+    if(Array.isArray(obj))
+	temp = [];
+    else
+	temp = {};
 
     for(let key of Object.keys(obj)){
 	obj['isActiveClone_'] = null;
