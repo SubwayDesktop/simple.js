@@ -135,6 +135,24 @@ function inst(template, data){
 
 
 /**
+ * Another version of inst(), returns a <div> containing the template content
+ * @param HTMLTemplateElement template
+ * @param Object data
+ * @return HTMLDivElement
+ */
+function inst_div(template, data, parent){
+    var html = template.innerHTML;
+    var instance = create('div', {
+	innerHTML: html
+    });
+    if(data)
+	for(let selector of Object.keys(data))
+	    elementAssign(instance.querySelector(selector), data[selector]);
+    return instance;
+}
+
+
+/**
  * Sets CSS property "display" of the specified html element to none.
  * @param HTMLElement element
  * @return Boolean
