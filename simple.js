@@ -312,17 +312,21 @@ function printf(args){
 
 
 /**
- * Returns a deep-clone of the specified object.
+ * Returns a deep copy of the specified object.
  * @param Object obj
  * @return Object
  */
+(function(){
+
+var is_active_clone = Symbol('is_active_clone');
+
 function clone(obj){
     /* code from stackoverflow #122102, much faster than other methods
      * modified for only cloning simple objects which only contain
      * primitive, array and object inheriting Object directly
      */
     var temp;
-    if(obj === null || typeof(obj) !== 'object' || 'isActiveClone_' in obj)
+    if(obj === null || typeof(obj) !== 'object' || is_active_clone in obj)
 	return obj;
 
     if(Array.isArray(obj))
@@ -331,13 +335,17 @@ function clone(obj){
 	temp = {};
 
     for(let key of Object.keys(obj)){
-	obj['isActiveClone_'] = null;
+	obj[is_active_clone] = null;
 	temp[key] = clone(obj[key]);
-	delete obj['isActiveClone_'];
+	delete obj[is_active_clone];
     }
 
     return temp;
 }
+
+window.clone = clone;
+
+})();
 
 
 /* Polyfill NodeList.prototype[Symbol.iterator] */
