@@ -300,14 +300,14 @@ function enableForm(form){
  * @param String ...args
  * @return String
  */
-function printf(args){
-    var string = arguments[0];
-    /* note that %n in the string must be in ascending order */
-    /* like 'Foo %1 Bar %2 %3' */
-    var i;
-    for(i=arguments.length-1; i>0; i--)
-	string = string.replace('%'+i, arguments[i]);
-    return string;
+function printf(){
+    var str = arguments[0];
+    var args = arguments;
+    str = str.replace(/%(\d+)|%{(\d+)}/g, function(match, number1, number2){
+	var number = number1? number1: number2;
+	return (typeof args[number] != 'undefined')? args[number]: match;
+    });
+    return str;
 }
 
 
