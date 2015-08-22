@@ -39,8 +39,11 @@ function assignGlobalObjects(list){
  * @return void
  */
 function assignMethods(constructor, methods){
-    for(let I of Object.keys(methods))
-	constructor.prototype[I] = methods[I];
+    if(!constructor.$init){
+	for(let I of Object.keys(methods))
+	    constructor.prototype[I] = methods[I];
+	constructor.$init = true;
+    }
 }
 
 
