@@ -102,7 +102,7 @@ function elementAssign(element, properties){
 
     /* assign other properties */
     for(let I of Object.keys(properties)){
-	if(!properties[I])
+	if(!properties[I] && typeof properties[I] != 'boolean')
 	    continue;
 	element[I] = properties[I];
     }
