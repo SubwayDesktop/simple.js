@@ -128,26 +128,27 @@ function create(type, properties){
  * @param Object data
  * @return DocumentFragment
  */
-function inst(template, data){
-    var instance = document.importNode(template, true).content;
-    if(data)
-	for(let selector of Object.keys(data))
-	    elementAssign(instance.querySelector(selector), data[selector]);
-    return instance;
-}
-
-
 /**
- * Another version of inst(), returns a <div> containing the template content
+ * Another version of inst(), which is implemented using innerHTML,
+ * returns an element of specified type containing the template content.
  * @param HTMLTemplateElement template
+ * @param String type
  * @param Object data
- * @return HTMLDivElement
+ * @return HTMLElement
  */
-function inst_div(template, data, parent){
-    var html = template.innerHTML;
-    var instance = create('div', {
-	innerHTML: html
-    });
+function inst(template, arg1, arg2){
+    var instance, data;
+    if(typeof arg1 == 'string'){
+	data = arg2;
+	let type = arg1;
+	let html = template.innerHTML;
+	instance = create(type, {
+	    innerHTML: html
+	});
+    }else{
+	data = arg1;
+	instance = document.importNode(template, true).content;
+    }
     if(data)
 	for(let selector of Object.keys(data))
 	    elementAssign(instance.querySelector(selector), data[selector]);
